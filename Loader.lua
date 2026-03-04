@@ -1,9 +1,3 @@
--- ================================================
--- NEXUS HUB | Loader.lua | Fichier unique Xeno
--- CTRL DROIT = afficher/cacher
--- Toggle ON/OFF haut = tout couper
--- ================================================
-
 local Players          = game:GetService("Players")
 local RunService       = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
@@ -16,7 +10,6 @@ if plr.PlayerGui:FindFirstChild("NexusHub") then
     plr.PlayerGui.NexusHub:Destroy()
 end
 
--- FEATURES STATE
 local F = {
     speedHack=false, walkSpeed=16, fly=false, flySpeed=50,
     infJump=false, jumpPower=50, lowGravity=false, gravityVal=100, noclip=false,
@@ -45,16 +38,12 @@ local function getChar()  return plr.Character end
 local function getHum()   local c=getChar(); return c and c:FindFirstChildOfClass("Humanoid") end
 local function getRoot()  local c=getChar(); return c and c:FindFirstChild("HumanoidRootPart") end
 
--- ================================================
--- SCREEN GUI
--- ================================================
 local SG = Instance.new("ScreenGui")
 SG.Name = "NexusHub"
 SG.ResetOnSpawn = false
 SG.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 SG.Parent = plr.PlayerGui
 
--- Fenetre
 local Win = Instance.new("Frame")
 Win.Name = "Win"
 Win.Size = UDim2.new(0,650,0,430)
@@ -65,7 +54,6 @@ Win.Parent = SG
 do local c=Instance.new("UICorner",Win); c.CornerRadius=UDim.new(0,10) end
 do local s=Instance.new("UIStroke",Win); s.Color=Color3.fromRGB(80,120,255); s.Thickness=1.5 end
 
--- Titlebar
 local TB = Instance.new("Frame")
 TB.Size = UDim2.new(1,0,0,42)
 TB.BackgroundColor3 = Color3.fromRGB(18,18,28)
@@ -85,7 +73,6 @@ TL.Parent = TB
 
 do local l=Instance.new("Frame",TB); l.Size=UDim2.new(1,0,0,1); l.Position=UDim2.new(0,0,1,-1); l.BackgroundColor3=Color3.fromRGB(80,120,255); l.BorderSizePixel=0 end
 
--- Master toggle
 local MBG = Instance.new("Frame")
 MBG.Size = UDim2.new(0,56,0,26)
 MBG.Position = UDim2.new(1,-104,0.5,-13)
@@ -119,7 +106,6 @@ MBG.InputBegan:Connect(function(i)
     if i.UserInputType==Enum.UserInputType.MouseButton1 then MASTER=not MASTER; refreshMaster() end
 end)
 
--- Bouton X
 local CL = Instance.new("TextButton")
 CL.Text="X"; CL.Size=UDim2.new(0,30,0,30); CL.Position=UDim2.new(1,-40,0.5,-15)
 CL.BackgroundColor3=Color3.fromRGB(180,40,40); CL.TextColor3=Color3.fromRGB(255,255,255)
@@ -127,9 +113,6 @@ CL.TextSize=14; CL.Font=Enum.Font.GothamBold; CL.BorderSizePixel=0; CL.Parent=TB
 do local c=Instance.new("UICorner",CL); c.CornerRadius=UDim.new(0,6) end
 CL.MouseButton1Click:Connect(function() Win.Visible=false end)
 
--- ================================================
--- SIDEBAR
--- ================================================
 local SB = Instance.new("Frame")
 SB.Name = "Sidebar"
 SB.Size = UDim2.new(0,158,1,-42)
@@ -146,14 +129,12 @@ do
     p.PaddingTop=UDim.new(0,10); p.PaddingLeft=UDim.new(0,8); p.PaddingRight=UDim.new(0,8)
 end
 
--- Ligne séparatrice (dans Win, pas dans SB)
 do
     local l=Instance.new("Frame",Win)
     l.Size=UDim2.new(0,1,1,-42); l.Position=UDim2.new(0,158,0,42)
     l.BackgroundColor3=Color3.fromRGB(40,60,120); l.BorderSizePixel=0
 end
 
--- Content
 local CA = Instance.new("Frame")
 CA.Name = "Content"
 CA.Size = UDim2.new(1,-160,1,-43)
@@ -180,9 +161,6 @@ local function openPanel(buildFn)
     currentPanel = sc
 end
 
--- ================================================
--- COMPOSANTS
--- ================================================
 local function mkToggle(parent, label, get, set)
     local row=Instance.new("Frame"); row.Size=UDim2.new(1,-6,0,36); row.BackgroundTransparency=1; row.Parent=parent
     local lb=Instance.new("TextLabel"); lb.Text=label; lb.Size=UDim2.new(1,-56,1,0)
@@ -270,9 +248,6 @@ local function mkDropdown(parent, label, opts, get, set)
     sb.MouseButton1Click:Connect(function() mn.Visible=not mn.Visible end)
 end
 
--- ================================================
--- PANNEAUX
--- ================================================
 local function buildUpdate(p)
     mkSection(p,"v1.0.0 — 2025-01-01")
     for _,t in ipairs({"Menu principal avec sidebar","Mouvement : Speed Fly NoClip InfJump Gravity","Silent Aim + FOV + trigger + cible","ESP : vie HP distance tracer tracers liste joueurs","Budda + anti-ragdoll + Blox Fruits fast attack range","Settings : CTRL DROIT auto-rejoin"}) do mkLabel(p,t) end
@@ -376,9 +351,6 @@ local function buildSettings(p)
     end)
 end
 
--- ================================================
--- SIDEBAR BUTTONS
--- ================================================
 local CATS = {
     {name="Update",     icon="[U]", color=Color3.fromRGB(80,200,120),  build=buildUpdate},
     {name="Mouvement",  icon="[M]", color=Color3.fromRGB(100,150,255), build=buildMouvement},
@@ -421,9 +393,6 @@ for i,cat in ipairs(CATS) do
     if i==1 then task.defer(function() selectCat(catRef,btnRef,accRef) end) end
 end
 
--- ================================================
--- DRAG
--- ================================================
 local drag,ds,sp=false,nil,nil
 TB.InputBegan:Connect(function(i) if i.UserInputType==Enum.UserInputType.MouseButton1 then drag=true;ds=i.Position;sp=Win.Position end end)
 TB.InputEnded:Connect(function(i) if i.UserInputType==Enum.UserInputType.MouseButton1 then drag=false end end)
@@ -437,9 +406,6 @@ UserInputService.InputBegan:Connect(function(i,gpe)
     if i.KeyCode==Enum.KeyCode.RightControl then Win.Visible=not Win.Visible end
 end)
 
--- ================================================
--- FEATURES LOGIC
--- ================================================
 local flyBV,flyConn
 local function stopFly() if flyConn then flyConn:Disconnect();flyConn=nil end; if flyBV then flyBV:Destroy();flyBV=nil end end
 local function startFly()
