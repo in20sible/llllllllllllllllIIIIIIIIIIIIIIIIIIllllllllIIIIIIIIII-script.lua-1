@@ -10,7 +10,7 @@ local UserInputService = game:GetService("UserInputService")
 local TweenService     = game:GetService("TweenService")
 local plr              = Players.LocalPlayer
 local cam              = workspace.CurrentCamera
-local GITHUB_URL       = "https://raw.githubusercontent.com/in20sible/llllllllllllllllIIIIIIIIIIIIIIIIIIllllllllIIIIIIIIII-script.lua-1-/main/Loader.lua"
+local GITHUB_URL       = "https://raw.githubusercontent.com/in20sible/llllllllllllllllIIIIIIIIIIIIIIIIIIllllllllIIIIIIIIII-script.lua-1/main/Loader.lua"
 
 if plr.PlayerGui:FindFirstChild("NexusHub") then
     plr.PlayerGui.NexusHub:Destroy()
