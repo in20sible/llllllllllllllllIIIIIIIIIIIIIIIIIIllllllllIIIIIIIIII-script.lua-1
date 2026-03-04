@@ -207,7 +207,10 @@ local function buildGUI()
 
     -- Sidebar
     Sidebar = mk("Frame",{Size=UDim2.new(0,155,1,-40),Position=UDim2.new(0,0,0,40),BackgroundColor3=T.Sidebar,BorderSizePixel=0},MainFrame)
-    mk("Frame",{Size=UDim2.new(0,1,1,0),Position=UDim2.new(1,-1,0,0),BackgroundColor3=Color3.fromRGB(30,50,100),BorderSizePixel=0},Sidebar)
+    -- separateur (hors UIListLayout)
+    local sbSep=Instance.new("Frame")
+    sbSep.Size=UDim2.new(0,1,1,-40); sbSep.Position=UDim2.new(0,154,0,40)
+    sbSep.BackgroundColor3=Color3.fromRGB(30,50,100); sbSep.BorderSizePixel=0; sbSep.Parent=MainFrame
     local sbl=Instance.new("UIListLayout",Sidebar); sbl.Padding=UDim.new(0,4)
     local sbp=Instance.new("UIPadding",Sidebar); sbp.PaddingTop=UDim.new(0,8); sbp.PaddingLeft=UDim.new(0,8); sbp.PaddingRight=UDim.new(0,8)
 
